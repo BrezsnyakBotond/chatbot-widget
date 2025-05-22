@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot Widget</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background-color: #0f4c81;
+      color: white;
+      padding: 16px;
+      font-weight: 600;
+      font-size: 16px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .chat-history {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #ffffff;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+    }
+
+    .message {
+      margin-bottom: 16px;
+      max-width: 80%;
+    }
+
+    .user-message {
+      text-align: right;
+    }
+
+    .user-message .bubble {
+      background-color: #e60028;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 16px;
+      display: inline-block;
+      font-size: 15px;
+      line-height: 1.5;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .ai-message .bubble {
+      background-color: #f0f4f8;
+      color: #222;
+      padding: 12px 16px;
+      border-radius: 16px;
+      display: inline-block;
+      font-size: 15px;
+      line-height: 1.5;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .chat-input {
+      padding: 16px;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    textarea {
+      width: 100%;
+      height: 60px;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      resize: none;
+      box-sizing: border-box;
+      font-family: inherit;
+      background-color: #fdfdfd;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 18px;
+      background-color: #0f4c81;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #09375e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-header">VTP AI Chatbot</div>
+
+  <div class="chat-history" id="chat-history"></div>
+
+  <div class="chat-input">
+    <textarea id="question" placeholder="Type your question..."></textarea>
+    <button onclick="askQuestion()">Send</button>
+  </div>
+
+  <script>
+    const chatHistory = document.getElementById('chat-history');
+    const textarea = document.getElementById('question');
+
+    textarea.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        askQuestion();
+      }
+    });
+
+    function appendMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', `${sender}-message`);
+
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      bubble.textContent = text;
+
+      msgDiv.appendChild(bubble);
+      chatHistory.appendChild(msgDiv);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+    }
+
+    function askQuestion() {
+      const question = textarea.value.trim();
+      if (!question) return;
+
+      appendMessage(question, "user");
+      textarea.value = "";
+      appendMessage("💬 Ez csak egy demó. A válaszadás funkció nincs bekapcsolva.", "ai");
+    }
+  </script>
+
+</body>
+</html>
